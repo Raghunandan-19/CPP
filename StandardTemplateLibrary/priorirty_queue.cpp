@@ -20,6 +20,7 @@ int main() {
     }
     cout << "\n";
 
+    // min heap
     priority_queue<int, vector<int>, greater<int>> pq1;
     pq1.push(10);
     pq1.push(20);
