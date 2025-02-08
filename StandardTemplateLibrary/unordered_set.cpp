@@ -9,6 +9,7 @@ int main() {
     st.insert(21);
     st.insert(69);
     st.insert(7);
+    st.insert(99);
 
     for (auto it : st) {
         cout << it << " ";
