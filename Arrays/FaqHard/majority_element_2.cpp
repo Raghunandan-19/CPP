@@ -5,24 +5,19 @@ class Solution {
 public:
     vector<int> majorityElementTwo(vector<int> &nums) {
         int n = nums.size();
-        set<int> temp;
-    
-        for (int i = 0; i < n - 1; i++) {
-            int cnt = 1;
-            for (int j = i + 1; j < n; j++) {
-                if (nums[j] == nums[i]) {
-                    cnt++;
-                }
-    
-                    
-            }
-    
-            if (cnt > (n / 3)) {
-                temp.insert(nums[i]);
+        map<int, int> mpp;
+
+        for (int num : nums) {
+            mpp[num]++;
+        }
+
+        vector<int> ans;
+        for (auto &it : mpp) {
+            if (it.second > (n / 3)) {
+                ans.push_back(it.first);
             }
         }
-    
-        vector<int> ans(temp.begin(), temp.end());
+
         return ans;
     }
 };
