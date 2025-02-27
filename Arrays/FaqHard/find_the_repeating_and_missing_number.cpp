@@ -5,23 +5,33 @@ class Solution {
 public:
     vector<int> findMissingRepeatingNumbers(vector<int> nums) {
         int n = nums.size();
-        int missing = -1, repeating = -1;
-        int hash[n + 1] = {0};
-
+        
+        // Calculate sum of first n natural numbers: 1+2+...+n
+        long long sN = (n * (n + 1)) / 2;
+        // Calculate sum of squares of first n natural numbers: 1²+2²+...+n²
+        long long s2N = (n * (n + 1) * (2 * n + 1)) / 6;
+        
+        // Calculate actual sum and sum of squares from the array
+        long long s = 0, s2 = 0;
         for (int i = 0; i < n; i++) {
-            hash[nums[i]]++;
+            s += nums[i];
+            s2 += ((long long) (nums[i]) * (long long) (nums[i]));
         }
-
-        for (int i = 1; i <= n; i++) {
-            if (hash[i] == 0) {
-                missing = i;
-            }
-            else if (hash[i] == 2) {
-                repeating = i;
-            }
-        }
-
-        return {repeating, missing};
+        
+        // If x is repeating and y is missing number:
+        // s - sN = x - y (difference of sums)
+        long long val1 = s - sN;
+        
+        // s2 - s2N = x² - y² = (x-y)(x+y)
+        long long val2 = s2 - s2N;
+        // val2/val1 = (x+y)
+        val2 = val2 / val1;
+        
+        // Solving for x and y using the two equations
+        long long x = (val1 + val2) / 2;    // Repeating number
+        long long y = x - val1;             // Missing number
+        
+        return {(int) x, (int) y};
     }
 };
 
@@ -37,7 +47,7 @@ int main() {
     }
 
     Solution sol;
-    for (auto &num : nums) {
+    for (auto &num : sol.findMissingRepeatingNumbers(nums)) {
         cout << num << " ";
     }
     cout << "\n";
