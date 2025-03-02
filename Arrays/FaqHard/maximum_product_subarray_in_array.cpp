@@ -8,12 +8,10 @@ public:
         int maxProd = 1;
 
         for (int i = 0; i < n; i++) {
+            int product = 1;
             for (int j = i; j < n; j++) {
-                int product = 1;
-                for (int k = i; k <= j; k++) {
-                    product *= nums[k];
-                    maxProd = max(product, maxProd);
-                }
+                product *= nums[j];
+                maxProd = max(product, maxProd);
             }
         }
 
