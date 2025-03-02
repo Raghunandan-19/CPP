@@ -13,7 +13,8 @@ public:
             if (goodSet.count(num)) {
                 cnt++;
                 maxCnt = max(maxCnt, cnt);
-            } else {
+            } 
+            else {
                 cnt = 0;
             }
         }
