@@ -2,40 +2,48 @@
 using namespace std;
 
 class Solution {
-private:
-    bool linearSearch(vector<int> &nums, int target) {
-        int n = nums.size();
-
-        for (int i = 0; i < n; i++) {
-            if (nums[i] == target) {
-                return true;
-            }
-        }
-
-        return false;
-    }
 public:
     int longestConsecutive(vector<int> &nums) {
+        // Create an unordered set to store unique elements from the input vector
+        unordered_set<int> st;
+        
         int n = nums.size();
-        sort(nums.begin(), nums.end());
-        int longest = 1;
-        int current_cnt = 0;
-        int last_smaller = INT_MIN;
+        
+        // If the input vector is empty, return 0 as there are no sequences
+        if (n == 0) return 0;
 
+        // Variable to store the length of the longest consecutive sequence
+        int longest_sequence = 1; 
+
+        // Insert all elements of the vector into the unordered set
         for (int i = 0; i < n; i++) {
-            if (nums[i] - 1 == last_smaller) {
-                current_cnt = current_cnt + 1;
-                last_smaller = nums[i];
-            }
-            else if (nums[i] != last_smaller) {
-                current_cnt = 1;
-                last_smaller = nums[i];
-            }
-
-            longest = max(longest, current_cnt);
+            st.insert(nums[i]);
         }
 
-        return longest;
+        // Iterate through each element in the set
+        for (auto it : st) {
+            // Check if the current element is the start of a sequence
+            if (st.find(it - 1) == st.end()) {
+
+                // Initialize the current sequence length to 1
+                int count_current = 1; 
+                
+                // Start with the current number
+                int num = it; 
+
+                // Continue checking for consecutive numbers in the sequence
+                while (st.find(num + 1) != st.end()) {
+                    num++; // Move to the next number
+                    count_current++; // Increment the current sequence length
+                }
+
+                // Update the longest sequence length if the current sequence is longer
+                longest_sequence = max(longest_sequence, count_current);
+            }
+        }
+
+        // Return the length of the longest consecutive sequence
+        return longest_sequence;
     }
 };
 
