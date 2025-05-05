@@ -17,26 +17,25 @@ private:
 public:
     int longestConsecutive(vector<int> &nums) {
         int n = nums.size();
-        
-        if (n == 0) {
-            return 0;
-        }
-
-        int longest_consecutive = 1;
+        sort(nums.begin(), nums.end());
+        int longest = 1;
+        int current_cnt = 0;
+        int last_smaller = INT_MIN;
 
         for (int i = 0; i < n; i++) {
-            int target = nums[i];
-            int count = 1;
-
-            while (linearSearch(nums, target + 1) == true) {
-                target++;
-                count++;
+            if (nums[i] - 1 == last_smaller) {
+                current_cnt = current_cnt + 1;
+                last_smaller = nums[i];
+            }
+            else if (nums[i] != last_smaller) {
+                current_cnt = 1;
+                last_smaller = nums[i];
             }
 
-            longest_consecutive = max(count, longest_consecutive);
+            longest = max(longest, current_cnt);
         }
 
-        return longest_consecutive;
+        return longest;
     }
 };
 
