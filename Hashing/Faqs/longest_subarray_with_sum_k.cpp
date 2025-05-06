@@ -5,23 +5,30 @@ class Solution {
 public:
     int longestSubarray(vector<int> &nums, int k) {
         int n = nums.size();
-        int longest = INT_MIN;
+        map<long long, int> pre_sum_map;
+        long long sum = 0;
+        int max_len = 0;
 
-        for (int start_index = 0; start_index < n; start_index++) {
-            for (int end_index = start_index; end_index < n; end_index++) {
-                int current_sum = 0;
+        for (int i = 0; i < n; i++) {
+            sum += nums[i];
 
-                for (int i = start_index; i <= end_index; i++) {
-                    current_sum += nums[i];
-                }
+            if (sum == k) {
+                max_len = max(max_len, i + 1);
+            }
 
-                if (current_sum == k) {
-                    longest = max(longest, end_index - start_index + 1);
-                }
+            long long rem = sum - k;
+
+            if (pre_sum_map.find(rem) != pre_sum_map.end()) {
+                int len = i - pre_sum_map[rem];
+                max_len = max(max_len, len);
+            }
+
+            if (pre_sum_map.find(sum) == pre_sum_map.end()) {
+                pre_sum_map[sum] = i;
             }
         }
 
-        return longest;
+        return max_len;
     }
 };
 
