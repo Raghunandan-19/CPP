@@ -4,22 +4,36 @@ using namespace std;
 class Solution {
 public:
     int subarraySum(vector<int> &nums, int k) {
+        // size of the vector
         int n = nums.size();
-        int cnt = 0;
 
+        // map to store prefix sum and count of prefix sum
+        map<int, int> mpp;
+
+        // putting <0, 1> in map as initial prefix sum
+        mpp[0] = 1;
+
+        // variables to store prefix sum and count of prefix sum
+        int prefix_sum = 0;
+        int count = 0;
+        
+        // iterating in the vector 
         for (int i = 0; i < n; i++) {
-            int sum = 0;
+            // adding element to prefix sum
+            prefix_sum += nums[i];
+            
+            // calculating the value to remove (prefix_sum - k)
+            int sum_to_remove = prefix_sum - k;
 
-            for (int j = i; j < n; j++) {
-                sum += nums[j];
-                
-                if (sum == k) {
-                    cnt++;
-                }
-            }
+            // add the number of subarrays with the sum to be removed 
+            count += mpp[sum_to_remove];
+            
+            // update the count of current prefix sum in the map
+            mpp[prefix_sum]++;
         }
 
-        return cnt;
+        // return the count of subarrays with sum = k
+        return count;
     }
 };
 
