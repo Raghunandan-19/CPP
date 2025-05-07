@@ -8,12 +8,10 @@ public:
         int count = 0;
 
         for (int start_index = 0; start_index < n; start_index++) {
+            int xorr = 0;
+            
             for (int end_index = start_index; end_index < n; end_index++) {
-                int xorr = 0;
-
-                for (int i = start_index; i <= end_index; i++) {
-                    xorr ^= nums[i];
-                }
+                xorr ^= nums[end_index];
 
                 if (xorr == k) {
                     count++;            
