@@ -14,22 +14,22 @@ public:
 
             // If the running sum equals k, update max_len to include the entire subarray from the start
             if (sum == k) {
-            max_len = max(max_len, i + 1);
+                max_len = max(max_len, i + 1);
             }
 
-            // Calculate the remaining sum needed to reach k
+            // Calculate the remaining sum needed to reach k 
             long long rem = sum - k;
 
             // Check if the remaining sum exists in the map
             if (pre_sum_map.find(rem) != pre_sum_map.end()) {
-            // Calculate the length of the subarray and update max_len
-            int len = i - pre_sum_map[rem];
-            max_len = max(max_len, len);
+                // Calculate the length of the subarray and update max_len
+                int len = i - pre_sum_map[rem];
+                max_len = max(max_len, len);
             }
 
             // Store the current sum in the map if it is not already present
             if (pre_sum_map.find(sum) == pre_sum_map.end()) {
-            pre_sum_map[sum] = i;
+                pre_sum_map[sum] = i;
             }
         }
 
