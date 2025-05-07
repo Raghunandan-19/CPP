@@ -5,21 +5,33 @@ class Solution {
 public:
     int subarraysWithXorK(vector<int> &nums, int k) {
         int n = nums.size();
-        int count = 0;
+        
+        // Map to store the frequency of prefix XORs
+        map<int, int> mpp;
 
-        for (int start_index = 0; start_index < n; start_index++) {
-            int xorr = 0;
-            
-            for (int end_index = start_index; end_index < n; end_index++) {
-                xorr ^= nums[end_index];
+        // Initialize with 0 XOR having frequency 1
+        mpp[0] = 1; 
 
-                if (xorr == k) {
-                    count++;            
-                }
-            }
+        // To store the cumulative XOR and count of number of subarrays with XOR equal to k
+        int prefix_xor = 0; 
+        int subarray_count = 0;
+
+        for (int i = 0; i < n; i++) {
+            // Update the prefix XOR with the current element
+            prefix_xor ^= nums[i]; 
+
+            // Calculate the XOR that needs to be removed to get XOR k
+            int xor_to_remove = prefix_xor ^ k; 
+
+            // Add the frequency of the required XOR to the count
+            subarray_count += mpp[xor_to_remove]; 
+
+            // Update the frequency of the current prefix XOR
+            mpp[prefix_xor]++; 
         }
 
-        return count;
+        // Return the total count of subarrays with XOR k
+        return subarray_count; 
     }
 };
 
