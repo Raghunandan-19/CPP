@@ -5,15 +5,24 @@ class Solution {
 public:
     int findMin(vector<int> &arr)  {
         int n = arr.size();
-        int mini = arr[0];
+        int low = 0;
+        int high = n - 1;
+        int minimum_element = INT_MAX;
 
-        for (int i = 0; i < n; i++) {
-            if (arr[i] < mini) {
-                mini = arr[i];
+        while (low <= high) {
+            int mid = low + (high - low) / 2;
+
+            if (arr[low] <= arr[mid]) {
+                minimum_element = min(arr[low], minimum_element);
+                low = mid + 1;
+            }
+            else {
+                minimum_element = min(arr[mid], minimum_element);
+                high = mid - 1;
             }
         }
 
-        return mini;
+        return minimum_element;
     }
 };
 
