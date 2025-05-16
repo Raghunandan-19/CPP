@@ -4,18 +4,30 @@ using namespace std;
 class Solution {
 public:
     long long floorSqrt(long long n)  {
-        long long ans = 1;
+        // Initialize the search range
+        long long low = 0;
+        long long high = n;
 
-        for (int i = 1; i <= n; i++) {
-            if ((i * i) <= n) {
-                ans = i;
+        // Binary search to find the floor of the square root
+        while (low <= high) {
+            // Calculate the middle value to avoid overflow
+            long long mid = low + (high - low) / 2;\
+
+            // Compute mid square
+            long long val = mid * mid;
+
+            // If mid*mid is less than or equal to n, move to the right half
+            if (val <= n) {
+                low = mid + 1;
             }
+            // If mid*mid is greater than n, move to the left half
             else {
-                break;
+                high = mid - 1;
             }
         }
-
-        return ans;
+        
+        // high will be the floor of the square root of n
+        return high;
     }
 };
 
