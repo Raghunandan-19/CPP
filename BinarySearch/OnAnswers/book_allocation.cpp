@@ -4,20 +4,30 @@ using namespace std;
 class Solution {
 private:
     int countStudents(vector<int> &nums, int pages) {
+        // Get the total number of books
         int n = nums.size();
+
+        // Start with one student
         int students = 1;
+
+        // Current pages assigned to current student
         int pages_student = 0;
 
         for (int i = 0; i < n; i++) {
+            // If current student can take this book without exceeding the limit
             if ((pages_student + nums[i]) <= pages) {
+                // Add pages to current student's allocation
                 pages_student += nums[i];
             }
             else {
+                /* Current student can't take more books, so move to next student
+                   Increment student count */
                 students++;
-                pages_student = nums[i];
+                pages_student = nums[i];   // Assign current book to new student
             }
         }
 
+        // Return the total number of students needed for this page limit
         return students;
     }
 public:
