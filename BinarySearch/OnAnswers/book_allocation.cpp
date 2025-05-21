@@ -22,19 +22,36 @@ private:
     }
 public:
     int findPages(vector<int> &nums, int m) {
+        // Get the size of the array
         int n = nums.size();
 
+        // Edge case: If we need more students than books, it's impossible
         if (m > n) return -1;
 
+        /* Initialize binary search boundaries:
+           low: minimum possible answer (maximum value in array - can't be less than that)
+           high: maximum possible answer (sum of all pages - one student reads all books) */
         int low = *max_element(nums.begin(), nums.end());
         int high = accumulate(nums.begin(), nums.end(), 0);
 
-        for (int pages = low; pages <= high; pages++) {
-            if (countStudents(nums, pages) == m) {
-                return pages;
+        // Binary search
+        while (low <= high) {
+            // Calculate middle value (avoid overflow)
+            int mid = low + (high - low) / 2;
+
+            /* If current mid-value requires more than m students,
+               we need to increase the pages per student (move right) */
+            if (countStudents(nums, mid) > m) {
+                low = mid + 1;
+            }
+            /* If we can allocate books with <= m students,
+               try to minimize the maximum pages (move left) */
+            else {
+                high = mid - 1;
             }
         }
 
+        // low is the minimum number of maximum pages
         return low;
     }
 };
