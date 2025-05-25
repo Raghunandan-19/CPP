@@ -6,25 +6,25 @@
       "type": "shell",
       "command": "",
       "args": [
-        "cp",
+        "copy",
         "\"${file}\"",
-        "${workspaceFolder}/jspwTest.cpp",
+        "${workspaceFolder}\\jspwTest.cpp",
         "&&",
         "g++",
         "jspwTest.cpp",
         "-o",
         "jspwTest",
         "&&",
-        "./jspwTest",
+        "jspwTest",
         "<",
         "input.txt",
         ">",
         "output.txt",
         "&&",
-        "rm",
-        "jspwTest",
+        "del",
+        "jspwTest.exe",
         "&&",
-        "rm",
+        "del",
         "jspwTest.cpp"
       ],
       "presentation": {
@@ -32,13 +32,13 @@
       },
       "group": {
         "kind": "build",
-        "isDefault": true
+        "isDefault": true,
       },
       "problemMatcher": {
         "owner": "cpp",
         "fileLocation": [
           "relative",
-          "${workspaceFolder}"
+          "${workspaceRoot}"
         ],
         "pattern": {
           "regexp": "^(.*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$",
